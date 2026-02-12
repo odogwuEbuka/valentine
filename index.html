@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Mon Trésor ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #ff4e88, #ff6ec7, #ff9a9e);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+}
+
+.message {
+    margin: 20px 0;
+    min-height: 60px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s ease;
+}
+
+#yesBtn {
+    background: white;
+    color: #ff4e88;
+    font-weight: bold;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
+#noBtn {
+    background: #ff2e63;
+    color: white;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.success {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(0.5); }
+    100% { transform: scale(1); }
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8f0b9b69a4.mp3?filename=romantic-love-117199.mp3" type="audio/mp3">
+</audio>
+
+<div class="container" id="mainContent">
+    <h1>Mon Trésor ❤️</h1>
+    <h2>Will you be my Valentine?</h2>
+    <div class="message" id="message">
+        I have something special planned… but try clicking NO first 😏
+    </div>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 😍</button>
+        <button id="noBtn">No 🙈</button>
+    </div>
+</div>
+
+<div class="container hidden" id="successContent">
+    <div class="success">You Said YES!!! 💍❤️</div>
+    <p>You are my forever and always.</p>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const mainContent = document.getElementById("mainContent");
+const successContent = document.getElementById("successContent");
+
+let noCount = 0;
+let runawayMode = false;
+
+const sweetMessages = [
+"Are you sure? 🥺",
+"Please don't break my heart 😭",
+"I already bought chocolates 🍫",
+"My playlist is ready 🎶",
+"I even practiced my dance 💃",
+"I promise unlimited cuddles 🤗",
+"I’ll share my fries 🍟",
+"You’re too cute to say no 😍",
+"My heart skipped 💓",
+"I’ll write you poems ✍️",
+"You’re enjoying this right? 😅",
+"Okay… this is your last NO 😩"
+];
+
+noBtn.addEventListener("click", () => {
+    if (noCount < 12) {
+        message.innerHTML = sweetMessages[noCount];
+        noCount++;
+    } else {
+        runawayMode = true;
+        message.innerHTML = "Now you can’t catch NO anymore 😈 Click YES my love ❤️";
+    }
+});
+
+yesBtn.addEventListener("click", () => {
+    if (noCount < 12) {
+        message.innerHTML = "Hmmmm 🤭 Try clicking NO first… trust me ❤️";
+    } else {
+        mainContent.classList.add("hidden");
+        successContent.classList.remove("hidden");
+    }
+});
+
+/* RUNAWAY EFFECT */
+document.addEventListener("mousemove", (e) => {
+    if (runawayMode) {
+        const rect = noBtn.getBoundingClientRect();
+        const distanceX = Math.abs(e.clientX - rect.left);
+        const distanceY = Math.abs(e.clientY - rect.top);
+
+        if (distanceX < 100 && distanceY < 100) {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = "absolute";
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+        }
+    }
+});
+
+/* Floating Hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
